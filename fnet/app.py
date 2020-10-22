@@ -1,4 +1,5 @@
-from flask import Flask, jsonify
+from flask import Flask, send_file, jsonify
+import requests
 app = Flask(__name__) 
   
 @app.route('/', methods=['GET']) 
@@ -11,19 +12,14 @@ def canary():
     return jsonify({'success': 'true',
                     'message': 'HTTP 200. All ok.'})
 
-@app.route('/', methods=['PUT'])
+@app.route('/imagedl', methods=['GET','PUT'])
 def create_record():
-    record = json.loads(request.data)
-    with open('/tmp/data.txt', 'r') as f:
-        data = f.read()
-    if not data:
-        records = [record]
-    else:
-        records = json.loads(data)
-        records.append(record)
-    with open('/tmp/data.txt', 'w') as f:
-        f.write(json.dumps(records, indent=2))
-    return jsonify(record)
+    
+    sampleimageurl='https://gordon.byers.me/assets/img/die-bart-die.png'
+    imagefile = requests.get(sampleimageurl)
+    open('localimage.png', 'wb').write(imagefile.content)
+
+    return send_file('localimage.png', mimetype='image/png')
 
 if __name__ == "__main__": 
     app.run(host = '0.0.0.0', port = 5001, debug = True)  
