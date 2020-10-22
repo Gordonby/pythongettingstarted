@@ -17,9 +17,9 @@ def create_record():
     
     sampleimageurl='https://gordon.byers.me/assets/img/die-bart-die.png'
     imagefile = requests.get(sampleimageurl)
-    open('localimage.png', 'wb').write(imagefile.content)
+    open('/tmp/localimage.png', 'wb').write(imagefile.content)
 
-    return send_file('localimage.png', mimetype='image/png')
+    return send_file('/tmp/localimage.png', mimetype='image/png')
 
 if __name__ == "__main__": 
     app.run(host = '0.0.0.0', port = 5001, debug = True)  
