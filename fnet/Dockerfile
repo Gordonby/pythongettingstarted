@@ -4,6 +4,9 @@ FROM mcr.microsoft.com/azureml/base-gpu:intelmpi2018.3-cuda10.0-cudnn7-ubuntu16.
 COPY . /app
 WORKDIR /app
 
+RUN echo $'python -V'
+RUN echo $'pip -V'
+
 
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
